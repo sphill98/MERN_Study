@@ -39,3 +39,49 @@ app.get('/list', async (요청, 응답) => {
   // 응답.send(result[0].title)
   응답.render('list.ejs', { 글목록 : result })
 })
+
+app.get('/time', (요청, 응답) => {
+  var time = new Date()
+  응답.render('time.ejs', {newTime : time})
+}) 
+
+app.get('/write', (요청, 응답) => {
+  응답.render('write.ejs')
+}) 
+
+app.post('/add', async (요청, 응답) => {
+  console.log(요청.body)
+  try {
+    if (요청.body.title == '') {
+      응답.send('제목 없음!')
+    } else {
+      await db.collection('collection').insertOne({title : 요청.body.title, content : 요청.body.content})
+      //collection에 파일 하나 만들고 거기에 데이터를 입력한다
+      응답.redirect('/list')
+    }
+  } catch(e) {
+    console.log(e)//에러메시지 출력해줌
+    응답.status(500).send('서버 에러!')
+  }
+}) 
+
+app.get('/detail/:id', async (요청, 응답) => {
+  //'detail/'뒤에 아무 문자나 입력하면 안에 있는 코드가 실행됨
+
+  try {
+    let result = await db.collection('collection').findOne({_id : new ObjectId(요청.params.id)})
+  console.log(요청.params)
+  응답.render('detail.ejs', {result : result}) 
+  } catch(e){
+    console.log(e)
+    응답.status(404).send('url error')
+  }
+}) 
+
+app.get('/edit/:id', async (요청, 응답) => {
+  db.collection('collection').updateOne()
+
+  let result = await db.collection('collection').findOne({_id : new ObjectId(요청.params.id)})
+  console.log(요청.params)
+  응답.render('edit.ejs', {result : result}) 
+}) 
