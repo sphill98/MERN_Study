@@ -6,12 +6,12 @@ app.set('view engine', 'ejs')
 const { MongoClient } = require('mongodb')
 
 let db
-const url = '' //
+const url = '' //당신은 제 DB에 접속할 수 없습니다 휴먼. 뭘 기대하신거죠?
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('forum')
   app.listen(3000, () => {
-    console.log('http://localhost:3000 에서 서버 실행중')
+    console.log('http://localhost:3000 에서 서버 실행중') //8080에서 다른 거 하고 있어서 3000만큼 사랑해
   })
 }).catch((err)=>{
   console.log(err)
