@@ -6,7 +6,7 @@ app.set('view engine', 'ejs')
 const { MongoClient } = require('mongodb')
 
 let db
-const url = 'mongodb+srv://admin:qwer1234@ycc-mern.iyfbroi.mongodb.net/?retryWrites=true&w=majority'
+const url = '' //
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('forum')
